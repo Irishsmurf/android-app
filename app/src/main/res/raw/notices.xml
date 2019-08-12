@@ -21,14 +21,14 @@
         <license>MIT License</license>
     </notice>
     <notice>
-        <name>ExoPlayer</name>
-        <url>https://google.github.io/ExoPlayer/</url>
+        <name>Coil</name>
+        <url>https://coil-kt.github.io/coil/</url>
         <license>Apache Software License 2.0</license>
     </notice>
     <notice>
-        <name>Glide</name>
-        <url>https://bumptech.github.io/glide/</url>
-        <license>BSD 3-Clause License</license>
+        <name>ExoPlayer</name>
+        <url>https://google.github.io/ExoPlayer/</url>
+        <license>Apache Software License 2.0</license>
     </notice>
     <notice>
         <name>Material Components</name>

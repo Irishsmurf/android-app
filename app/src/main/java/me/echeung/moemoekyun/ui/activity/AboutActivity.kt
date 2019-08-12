@@ -3,8 +3,9 @@ package me.echeung.moemoekyun.ui.activity
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
+import coil.api.load
 import de.psdev.licensesdialog.LicensesDialog
 import me.echeung.moemoekyun.BuildConfig
 import me.echeung.moemoekyun.R
@@ -43,9 +44,7 @@ class AboutActivity : BaseActivity(), View.OnClickListener {
         }
 
         // Kanna GIF
-        Glide.with(this)
-                .load(R.drawable.kanna_dancing)
-                .into(findViewById(R.id.kanna_image))
+        findViewById<ImageView>(R.id.kanna_image).load(R.drawable.kanna_dancing)
     }
 
     private fun setupClickListeners() {

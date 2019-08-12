@@ -8,47 +8,31 @@ import android.view.animation.LinearInterpolator
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.annotation.ColorInt
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
+import coil.api.load
 import me.echeung.moemoekyun.App
 
 private const val TRANSITION_DURATION = 250
 
 fun ImageView.loadImage(bitmap: Bitmap?) {
-    this.clear()
-
-    if (!App.preferenceUtil!!.shouldDownloadImage(context) || bitmap == null) {
+    if (bitmap == null || !App.preferenceUtil!!.shouldDownloadImage(context)) {
         return
     }
 
-    Glide.with(context)
-            .load(bitmap)
-            .transition(DrawableTransitionOptions.withCrossFade(TRANSITION_DURATION))
-            .apply(RequestOptions()
-                    .placeholder(drawable)
-                    .override(width, height)
-                    .centerCrop()
-                    .dontAnimate())
-            .into(this)
+    this.load(bitmap) {
+//        placeholder(drawable)
+        crossfade(TRANSITION_DURATION)
+    }
 }
 
 fun ImageView.loadImage(url: String?) {
-    this.clear()
-
-    if (!App.preferenceUtil!!.shouldDownloadImage(context) || url == null) {
+    if (url == null || !App.preferenceUtil!!.shouldDownloadImage(context)) {
         return
     }
 
-    Glide.with(context)
-            .load(url)
-            .transition(DrawableTransitionOptions.withCrossFade(TRANSITION_DURATION))
-            .apply(RequestOptions()
-                    .placeholder(drawable)
-                    .override(width, height)
-                    .centerCrop()
-                    .dontAnimate())
-            .into(this)
+    this.load(url) {
+//        placeholder(drawable)
+        crossfade(TRANSITION_DURATION)
+    }
 }
 
 fun EditText.getTrimmedText(): String {
@@ -72,10 +56,4 @@ fun View.transitionBackgroundColor(@ColorInt toColor: Int) {
 
 fun View.toggleVisibility(visible: Boolean) {
     visibility = if (visible) View.VISIBLE else View.GONE
-}
-
-private fun ImageView?.clear() {
-    if (this == null) return
-
-    Glide.with(context).clear(this)
 }

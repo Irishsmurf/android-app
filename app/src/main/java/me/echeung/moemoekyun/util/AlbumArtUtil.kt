@@ -9,16 +9,13 @@ import android.os.Handler
 import android.os.Looper
 import androidx.core.graphics.ColorUtils
 import androidx.palette.graphics.Palette
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
+import coil.Coil
+import coil.api.load
 import me.echeung.moemoekyun.App
 import me.echeung.moemoekyun.R
 import me.echeung.moemoekyun.client.model.Song
 import java.util.ArrayList
+import android.graphics.drawable.BitmapDrawable
 
 object AlbumArtUtil {
 
@@ -98,26 +95,16 @@ object AlbumArtUtil {
                 return
             }
 
-            Glide.with(context.applicationContext)
-                    .asBitmap()
-                    .load(url)
-                    .apply(RequestOptions()
-                            .override(MAX_SCREEN_SIZE, MAX_SCREEN_SIZE)
-                            .centerCrop()
-                            .dontAnimate())
-                    .listener(object : RequestListener<Bitmap> {
-                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
-                            return false
-                        }
+            Coil.load(context.applicationContext, url) {
+                size(MAX_SCREEN_SIZE, MAX_SCREEN_SIZE)
+                target { drawable ->
+                    isDefaultAlbumArt = false
 
-                        override fun onResourceReady(resource: Bitmap, model: Any, target: Target<Bitmap>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
-                            isDefaultAlbumArt = false
-                            extractAccentColor(resource)
-                            updateListeners(resource)
-                            return true
-                        }
-                    })
-                    .submit()
+                    val bitmap = (drawable as BitmapDrawable).bitmap
+                    extractAccentColor(bitmap)
+                    updateListeners(bitmap)
+                }
+            }
         })
     }
 
